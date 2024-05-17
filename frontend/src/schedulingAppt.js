@@ -294,7 +294,7 @@ export class SchedulingAppt extends Component {
                     .then(res => res.json())
                     .then(res => {
                       if ((res.data[0])) {
-                        window.alert("Appointment Clash! Try another doctor or date/time");
+                        window.alert("ok got it!");
                       } else {
                         fetch("http://localhost:3001/genApptUID")
                           .then(res => res.json())
