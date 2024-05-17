@@ -88,7 +88,7 @@ class LogIn extends Component {
                     "&password=" + value.password)
                     .then(res => res.json())
                     .then(res => {
-                      if (res.data.length === 0) {
+                      if (!res || res.data === undefined) {
                         window.alert("Invalid Log In");
                       } else {
                         window.location = "/Home";

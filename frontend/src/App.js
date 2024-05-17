@@ -22,27 +22,35 @@ import ShowDiagnoses from './ShowDiagnoses.js';
 
 export default function App() {
   let [component, setComponent] = useState(<LogIn />)
-  useEffect(()=>{
+  useEffect(() => {
     fetch("http://localhost:3001/userInSession")
-      .then(res => res.json())
       .then(res => {
-      let string_json = JSON.stringify(res);
-      let email_json = JSON.parse(string_json);
-      let email = email_json.email;
-      let who = email_json.who;
-      if(email === ""){
-        setComponent(<LogIn />)
-      }
-      else{
-        if(who==="pat"){
-          setComponent(<Home />)
+        if (!res.ok) {
+          throw new Error("Failed to fetch user session information");
         }
-        else{
-          setComponent(<DocHome />)
+        return res.json();
+      })
+      .then(res => {
+        let string_json = JSON.stringify(res);
+        let email_json = JSON.parse(string_json);
+        let email = email_json.email;
+        let who = email_json.who;
+        if (email === "") {
+          setComponent(<LogIn />);
+        } else {
+          if (who === "pat") {
+            setComponent(<Home />);
+          } else {
+            setComponent(<DocHome />);
+          }
         }
-      }
-    });
-  }, [])
+      })
+      .catch(error => {
+        console.error("Error fetching user session information:", error);
+        // Handle the error, e.g., display an error message to the user
+      });
+  }, []);
+  
   return (
     <Router>
       <div>

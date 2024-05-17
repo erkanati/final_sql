@@ -55,5 +55,5 @@ VALUES
 INSERT INTO DoctorViewsHistory(history,doctor)
 VALUES
 (1,'drluiza@gmail.com'),
-(2,'hathalye8@gmail.com'),
-(3,'hathalye8@gmail.com');
+(2,'madinaergalieva@gmail.com'),
+(3,'madinaergalieva@gmail.com');

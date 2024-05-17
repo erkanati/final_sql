@@ -235,16 +235,26 @@ function DoctorsDropdown() {
   const [doctorsList, setList] = useState([]);
   useEffect(() => {    
     fetch("http://localhost:3001/docInfo")
-    .then(res => res.json())
-    .then(res => {
-      let arr = []
-      res.data.forEach(i => {
-        let tmp = `${i.name} (${i.email})`;
-        arr.push(tmp);
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch doctor information");
+        }
+        return res.json();
+      })
+      .then(res => {
+        let arr = []
+        res.data.forEach(i => {
+          let tmp = `${i.name} (${i.email})`;
+          arr.push(tmp);
+        });
+        setList(arr);
+      })
+      .catch(error => {
+        console.error("Error fetching doctor information:", error);
+        // Handle the error, e.g., display an error message to the user
       });
-      setList(arr);
-    });
   }, []);
+  
   const onChange = event => {
     setValue(event.value);
     let doc = event.value.match(/\((.*)\)/)[1];
